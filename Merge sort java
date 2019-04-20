@@ -1,0 +1,56 @@
+//with test case input
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+public class Main
+{
+    static void merge(int[] arr,int low,int mid,int high){
+        int n1=mid-low+1;
+        int n2=high-mid;
+        int[] left=new int[n1+1];
+        int[] right=new int[n2+1];
+        for(int i=0;i<n1;i++){
+            left[i]=arr[low+i];
+        }
+        for(int j=0;j<n2;j++){
+            right[j]=arr[mid+j+1];
+        }
+        left[n1]=right[n2]=Integer.MAX_VALUE;
+        for(int k=low,i=0,j=0;k<=high;k++){
+            if(left[i]<right[j]){
+                arr[k]=left[i++];
+            }
+            else{
+                arr[k]=right[j++];
+            }
+        }
+    }
+    static void mergesort(int[] arr,int low,int high){
+        if(low<high){
+            int mid = (low+high)/2;
+            mergesort(arr,low,mid);
+            mergesort(arr,mid+1,high);
+            merge(arr,low,mid,high);
+        }
+    }
+	public static void main (String[] args)
+	{
+		// your code goes here
+		Scanner sc=new Scanner(System.in);
+		int tc=sc.nextInt();
+		while(tc!=0){
+		    int n=sc.nextInt();
+		    int[] arr=new int[n];
+		    for(int i=0;i<n;i++){
+		        arr[i]=sc.nextInt();
+		    }
+		    mergesort(arr,0,n-1);
+		    for(int j=0;j<n;j++){
+		        System.out.print(arr[j]+" ");
+		    }
+		    System.out.println();
+		    tc--;
+		}
+	}
+}
